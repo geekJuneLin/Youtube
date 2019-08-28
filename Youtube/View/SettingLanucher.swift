@@ -12,13 +12,11 @@ class SettingLanucher: NSObject{
     
     let blackView = UIView()
     let slideMenuView = SlideMenu()
-    var slideMenuViewBottomConstraint: NSLayoutConstraint?
     
     func showSettings(){
         print("menu button pressed")
         if let window = UIApplication.shared.keyWindow{
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            
             blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
             
             window.addSubview(blackView)
@@ -26,25 +24,24 @@ class SettingLanucher: NSObject{
             blackView.frame = window.frame
             blackView.alpha = 0
             
-            slideMenuView.translatesAutoresizingMaskIntoConstraints = false
-            slideMenuView.heightAnchor.constraint(equalTo: window.heightAnchor, multiplier: 0.6).isActive = true
-            slideMenuViewBottomConstraint = slideMenuView.bottomAnchor.constraint(equalTo: window.bottomAnchor, constant: window.frame.height * 0.6)
-            slideMenuViewBottomConstraint?.isActive = true
-            slideMenuView.widthAnchor.constraint(equalTo: window.widthAnchor).isActive = true
-            
+            let height: CGFloat = window.frame.height * 0.6
+            let y: CGFloat = window.frame.height - height
+    
+            slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
+
             UIView.animate(withDuration: 0.5) {
                 self.blackView.alpha = 1
-                self.slideMenuViewBottomConstraint?.constant = 0
-                window.layoutIfNeeded()
+                self.slideMenuView.frame = CGRect(x: 0, y: y, width: window.frame.width, height: height)
             }
         }
     }
     
     @objc func handleDismiss(){
-        UIView.animate(withDuration: 0.5) {
-            self.blackView.alpha = 0
-            if let window = UIApplication.shared.keyWindow{
-                self.slideMenuViewBottomConstraint?.constant = window.frame.height * 0.6
+        if let window = UIApplication.shared.keyWindow{
+            UIView.animate(withDuration: 0.5) {
+                self.blackView.alpha = 0
+                let height: CGFloat = window.frame.height * 0.6
+                self.slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
                 window.layoutIfNeeded()
             }
         }
