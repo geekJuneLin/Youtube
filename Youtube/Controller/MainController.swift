@@ -27,6 +27,8 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupCollectionView()
         setupBarItems()
         setupMenus()
+        
+        SettingLanucher.shard.mainController = self
     }
     
     // MARK: - fetch data
@@ -110,10 +112,17 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         print("search button pressed")
     }
     
-    let settingLauncher = SettingLanucher()
     
     @objc func menuBtnPressed(){
-        settingLauncher.showSettings()
+       SettingLanucher.shard.showSettings()
+    }
+    
+    func presentViewController(setting: Setting){
+        let viewController = UIViewController()
+        viewController.navigationItem.title = setting.title
+        viewController.view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: - set up the menu bar below the navigation bar

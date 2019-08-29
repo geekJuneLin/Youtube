@@ -25,7 +25,6 @@ class SlideMenu: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlo
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        print(settings?.count)
         setupView()
     }
     
@@ -63,5 +62,15 @@ class SlideMenu: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlo
         return 5
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let count = settings?.count{
+            if indexPath.item == count - 1{
+                SettingLanucher.shard.handleDismiss()
+            } else {
+                if let setting = settings?[indexPath.item]{
+                    SettingLanucher.shard.handleDismissSetting(setting: setting)
+                }
+            }
+        }
+    }
 }

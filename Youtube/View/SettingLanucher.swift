@@ -10,8 +10,16 @@ import UIKit
 
 class SettingLanucher: NSObject{
     
+    static let shard = SettingLanucher()
+    
+    var mainController: MainController?
+    
     let blackView = UIView()
-    let slideMenuView = SlideMenu()
+    let slideMenuView: SlideMenu = {
+        let view = SlideMenu()
+        return view
+    }()
+    
     var settings: [Setting] = {
         return[Setting(imageName: "dinosaur", title: "Setting"),
                Setting(imageName: "dinosaur", title: "Terms & privacy policy"),
@@ -47,12 +55,25 @@ class SettingLanucher: NSObject{
     
     @objc func handleDismiss(){
         if let window = UIApplication.shared.keyWindow{
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackView.alpha = 0
                 let height: CGFloat = CGFloat(self.self.settings.count * 50) + 50
                 self.slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
                 window.layoutIfNeeded()
-            }
+            })
+        }
+    }
+    
+    func handleDismissSetting(setting: Setting){
+        if let window = UIApplication.shared.keyWindow{
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.blackView.alpha = 0
+                let height: CGFloat = CGFloat(self.self.settings.count * 50) + 50
+                self.slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
+                window.layoutIfNeeded()
+            }, completion: { (completed) in
+                self.mainController?.presentViewController(setting: setting)
+            })
         }
     }
     

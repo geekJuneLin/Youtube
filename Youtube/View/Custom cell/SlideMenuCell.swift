@@ -21,9 +21,18 @@ class SlideMenuCell: UICollectionViewCell{
         }
     }
     
+    override var isHighlighted: Bool{
+        didSet{
+            backgroundColor = isHighlighted ? .gray : .white
+            titleLabel.textColor = isHighlighted ? .white : .gray
+        }
+    }
+    
     let iconView: UIImageView = {
        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 15
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
