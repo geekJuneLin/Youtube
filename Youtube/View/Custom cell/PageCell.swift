@@ -38,7 +38,7 @@ class PageCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cv.frame.width, height: (cv.frame.width - 32) * 12 / 16 + 92)
+        return CGSize(width: cv.frame.width, height: (cv.frame.width - 32) * 12 / 16 + 100)
     }
     
     override init(frame: CGRect) {

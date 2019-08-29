@@ -12,6 +12,14 @@ class SettingLanucher: NSObject{
     
     let blackView = UIView()
     let slideMenuView = SlideMenu()
+    var settings: [Setting] = {
+        return[Setting(imageName: "dinosaur", title: "Setting"),
+               Setting(imageName: "dinosaur", title: "Terms & privacy policy"),
+               Setting(imageName: "dinosaur", title: "Send Feedback"),
+               Setting(imageName: "dinosaur", title: "Help"),
+               Setting(imageName: "dinosaur", title: "Switch Account"),
+               Setting(imageName: "dinosaur", title: "Cancel")]
+    }()
     
     func showSettings(){
         print("menu button pressed")
@@ -24,10 +32,11 @@ class SettingLanucher: NSObject{
             blackView.frame = window.frame
             blackView.alpha = 0
             
-            let height: CGFloat = window.frame.height * 0.6
+            let height: CGFloat = CGFloat(settings.count * 50) + 50
             let y: CGFloat = window.frame.height - height
     
             slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
+            slideMenuView.settings = settings
 
             UIView.animate(withDuration: 0.5) {
                 self.blackView.alpha = 1
@@ -40,7 +49,7 @@ class SettingLanucher: NSObject{
         if let window = UIApplication.shared.keyWindow{
             UIView.animate(withDuration: 0.5) {
                 self.blackView.alpha = 0
-                let height: CGFloat = window.frame.height * 0.6
+                let height: CGFloat = CGFloat(self.self.settings.count * 50) + 50
                 self.slideMenuView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
                 window.layoutIfNeeded()
             }

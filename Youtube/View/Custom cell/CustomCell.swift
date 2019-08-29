@@ -18,7 +18,7 @@ class CustomCell: UICollectionViewCell{
             if let title = video?.title{
                 titleView.text = title
                 
-                let size = CGSize(width: self.frame.width - 105, height: 1000)
+                let size = CGSize(width: self.frame.width - 135, height: 1000)
                 let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
                 estimatedFrame = NSString(string: title).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 

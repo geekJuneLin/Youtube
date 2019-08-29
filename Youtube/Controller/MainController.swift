@@ -58,9 +58,8 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
                         video.des = "\(channelName) - \(views)"
                     }
                     self.videos?.append(video)
-                    
-                    print(json)
                 }
+                
                 DispatchQueue.main.async(execute: {
                     self.collectionView.reloadData()
                 })
