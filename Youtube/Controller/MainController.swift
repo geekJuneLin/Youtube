@@ -54,6 +54,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
                     
                     video.channel = channel
                     video.title = dictionary["title"] as? String
+                    video.duration = dictionary["duration"] as? Int
                     video.numberOfViews = dictionary["number_of_views"] as? Int
                     video.imageName = dictionary["thumbnail_image_name"] as? String
                     if let channelName = video.channel?.name, let views = formatter.string(for: video.numberOfViews){

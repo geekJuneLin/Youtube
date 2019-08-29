@@ -32,6 +32,26 @@ class CustomCell: UICollectionViewCell{
             if let des = video?.des{
                 descriptionView.text = des
             }
+            
+            if let time = video?.duration{
+                print(time)
+                var minSec = ""
+                let min: Int = time / 60
+                let sec = time % 60
+                if min < 10 {
+                    minSec.append(contentsOf: "0\(min):")
+                } else {
+                    minSec.append(contentsOf: "\(min):")
+                }
+                
+                if sec < 10 {
+                    minSec.append(contentsOf: "0\(sec)")
+                } else {
+                    minSec.append(contentsOf: "\(sec)")
+                }
+                
+                timingLabel.text = minSec
+            }
         }
     }
     
@@ -93,6 +113,16 @@ class CustomCell: UICollectionViewCell{
         return view
     }()
     
+    let timingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "03:20"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     var titleLabelHeightConstraint: NSLayoutConstraint?
     
     // MARK: - init func
@@ -115,6 +145,7 @@ class CustomCell: UICollectionViewCell{
         addSubview(titleView)
         addSubview(descriptionView)
         addSubview(separatorView)
+        addSubview(timingLabel)
         
         // place elements using anchors
 //        videoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
@@ -161,5 +192,10 @@ class CustomCell: UICollectionViewCell{
         addConstraint(NSLayoutConstraint(item: descriptionView, attribute: .left, relatedBy: .equal, toItem: imageView, attribute: .right, multiplier: 1, constant: 8))
         addConstraint(NSLayoutConstraint(item: descriptionView, attribute: .right, relatedBy: .equal, toItem: videoView, attribute: .right, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 40))
+        
+        timingLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        timingLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        timingLabel.rightAnchor.constraint(equalTo: videoView.rightAnchor, constant: -10).isActive = true
+        timingLabel.bottomAnchor.constraint(equalTo: videoView.bottomAnchor, constant: -10).isActive = true
     }
 }

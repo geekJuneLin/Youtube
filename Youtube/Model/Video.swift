@@ -13,6 +13,7 @@ struct Video{
     var title: String?
     var des: String?
     var numberOfViews: Int?
+    var duration: Int?
     var date: Date?
     
     var channel: Channel?
