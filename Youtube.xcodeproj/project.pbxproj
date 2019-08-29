@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E1B05562317537A00371001 /* SlideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B05552317537A00371001 /* SlideMenuCell.swift */; };
 		8E1B05582317601500371001 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B05572317601500371001 /* Setting.swift */; };
+		8E1B055A23179BBF00371001 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B055923179BBF00371001 /* ApiService.swift */; };
 		8E4846BA230F442B004BBC5A /* UIView+anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4846B9230F442B004BBC5A /* UIView+anchors.swift */; };
 		8E4846BC230F73FB004BBC5A /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4846BB230F73FB004BBC5A /* MenuBar.swift */; };
 		8E4846BE230F8376004BBC5A /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4846BD230F8376004BBC5A /* MenuCell.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		8E1B05552317537A00371001 /* SlideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuCell.swift; sourceTree = "<group>"; };
 		8E1B05572317601500371001 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		8E1B055923179BBF00371001 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		8E4846B9230F442B004BBC5A /* UIView+anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+anchors.swift"; sourceTree = "<group>"; };
 		8E4846BB230F73FB004BBC5A /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		8E4846BD230F8376004BBC5A /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				8E606074230E78D80017787F /* AppDelegate.swift */,
+				8E1B055923179BBF00371001 /* ApiService.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				8E1B05562317537A00371001 /* SlideMenuCell.swift in Sources */,
 				8E4846BC230F73FB004BBC5A /* MenuBar.swift in Sources */,
 				8EAC537D2316825100FE0210 /* SettingLanucher.swift in Sources */,
+				8E1B055A23179BBF00371001 /* ApiService.swift in Sources */,
 				8EAC53792316430B00FE0210 /* UIImageView+loadImages.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
