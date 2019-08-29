@@ -13,6 +13,8 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // MARK: - variables
     let cellId = "cellId"
     
+    let titles = ["Home", "Trending", "Subscription", "Account"]
+    
     var videos: [Video]?
     
 
@@ -182,6 +184,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         menuView.leftContraint?.constant = CGFloat(integerLiteral: Int(x / view.frame.width)) * menuView.frame.width / 4
         menuView.menuCollectionView.selectItem(at: nextIndex, animated: true, scrollPosition: .centeredHorizontally)
         
+        updateNavigationTitle(index: nextIndex.item)
         
         UIView.animate(withDuration: 0.75, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
@@ -191,6 +194,13 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func scrollToViewAtIndex(index: Int){
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updateNavigationTitle(index: index)
+    }
+    
+    fileprivate func updateNavigationTitle(index: Int){
+        if let label = navigationItem.titleView as? UILabel{
+            label.text = titles[index]
+        }
     }
 }
 
