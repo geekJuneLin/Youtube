@@ -102,6 +102,7 @@ class CustomCell: UICollectionViewCell{
         textView.textColor = .lightGray
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isEditable = false
         return textView
     }()
     

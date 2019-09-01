@@ -12,7 +12,8 @@ class PageCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIColl
     
     // MARK: - variables
     var videos: [Video]?
-    var navigationBar: UINavigationController?
+    var navigationController: UINavigationController?
+    var mainController: MainController?
     
     let cellId = "cellId"
     var cv: UICollectionView = {
@@ -63,15 +64,13 @@ class PageCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIColl
     // MARK: - when each page is scrolled by users, hide the navigation bar
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            self.navigationBar?.setNavigationBarHidden(true, animated: true)
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
-            }, completion: nil)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
         }else{
-            self.navigationBar?.setNavigationBarHidden(false, animated: true)
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
-            }, completion: nil)
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        mainController?.presentVideoView()
     }
 }

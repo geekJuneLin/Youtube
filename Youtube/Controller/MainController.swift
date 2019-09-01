@@ -13,9 +13,11 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // MARK: - variables
     let cellId = "cellId"
     
-    let titles = ["Home", "Trending", "Subscription", "Account"]
+    let titles = ["  Home", "  Trending", "  Subscription", "  Account"]
     
     var videos: [Video]?
+    
+    var interactor = Interactor()
     
 
     // MARK: - view did load
@@ -90,13 +92,38 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
        SettingLanucher.shard.showSettings()
     }
     
+    // MARK: - functions present another view
     func presentViewController(setting: Setting){
         let viewController = UIViewController()
-        viewController.navigationItem.title = setting.title
         viewController.view.backgroundColor = .white
+        viewController.navigationItem.title = setting.title
+        
         navigationController?.navigationBar.tintColor = .white
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    // MARK: - onverride the present function
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        navigationController?.present(viewControllerToPresent, animated: flag, completion: completion)
+        
+        if let des = viewControllerToPresent as? VideoViewController {
+            print("view controller")
+            des.transitioningDelegate = self
+            des.interacting = interactor
+        }
+    }
+    
+    // MARK: - displaying the video view controller
+    func presentVideoView(){
+        let videoViewController = VideoViewController()
+        
+        // Deal with the black groundcolor after dismissing view controller
+        videoViewController.modalPresentationStyle = .custom
+        self.present(videoViewController, animated: true) {
+            self.navigationController?.navigationBar.barTintColor = .black
+        }
+    }
+    
     
     // MARK: - set up the menu bar below the navigation bar
     let menuView: MenuBar = {
@@ -130,7 +157,8 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
         cell.videos = videos
-        cell.navigationBar = navigationController
+        cell.navigationController = navigationController
+        cell.mainController = self
         return cell
     }
     
@@ -173,4 +201,3 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
 }
-
