@@ -120,7 +120,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // Deal with the black groundcolor after dismissing view controller
         videoViewController.modalPresentationStyle = .custom
         self.present(videoViewController, animated: true) {
-            self.navigationController?.navigationBar.barTintColor = .black
+//            self.navigationController?.navigationBar.barTintColor = .black
         }
     }
     

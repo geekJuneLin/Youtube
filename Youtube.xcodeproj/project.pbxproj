@@ -18,6 +18,7 @@
 		8E606077230E78D80017787F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E606076230E78D80017787F /* MainController.swift */; };
 		8E60607F230E78DB0017787F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E60607D230E78DB0017787F /* LaunchScreen.storyboard */; };
 		8E60608C230E847D0017787F /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E60608B230E847D0017787F /* CustomCell.swift */; };
+		8E6B995D231D15A7005984B2 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B995C231D15A7005984B2 /* VideoView.swift */; };
 		8E953BBE2313E0EB0070B3A4 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E953BBD2313E0EB0070B3A4 /* Video.swift */; };
 		8EAC53792316430B00FE0210 /* UIImageView+loadImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAC53782316430B00FE0210 /* UIImageView+loadImages.swift */; };
 		8EAC537B2316654B00FE0210 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAC537A2316654B00FE0210 /* SlideMenu.swift */; };
@@ -42,6 +43,7 @@
 		8E60607E230E78DB0017787F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E606080230E78DB0017787F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E60608B230E847D0017787F /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		8E6B995C231D15A7005984B2 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		8E953BBD2313E0EB0070B3A4 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		8EAC53782316430B00FE0210 /* UIImageView+loadImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImages.swift"; sourceTree = "<group>"; };
 		8EAC537A2316654B00FE0210 /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				8E4846BB230F73FB004BBC5A /* MenuBar.swift */,
 				8EAC537A2316654B00FE0210 /* SlideMenu.swift */,
 				8EAC537C2316825100FE0210 /* SettingLanucher.swift */,
+				8E6B995C231D15A7005984B2 /* VideoView.swift */,
 				8E60608A230E84690017787F /* Custom cell */,
 			);
 			path = View;
@@ -230,6 +233,7 @@
 				8E60608C230E847D0017787F /* CustomCell.swift in Sources */,
 				8E1B05582317601500371001 /* Setting.swift in Sources */,
 				8EAC537B2316654B00FE0210 /* SlideMenu.swift in Sources */,
+				8E6B995D231D15A7005984B2 /* VideoView.swift in Sources */,
 				8E1B055C2317C58300371001 /* VideoViewController.swift in Sources */,
 				8EB62415231B1D8A00E04CA5 /* DismissAnimator.swift in Sources */,
 				8E606075230E78D80017787F /* AppDelegate.swift in Sources */,
