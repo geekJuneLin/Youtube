@@ -119,6 +119,8 @@ class CustomCell: UICollectionViewCell{
         label.text = "03:20"
         label.textColor = .white
         label.textAlignment = .center
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 8
         label.backgroundColor = UIColor(white: 0, alpha: 0.5)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -194,8 +196,8 @@ class CustomCell: UICollectionViewCell{
         addConstraint(NSLayoutConstraint(item: descriptionView, attribute: .right, relatedBy: .equal, toItem: videoView, attribute: .right, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 40))
         
-        timingLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        timingLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        timingLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        timingLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
         timingLabel.rightAnchor.constraint(equalTo: videoView.rightAnchor, constant: -10).isActive = true
         timingLabel.bottomAnchor.constraint(equalTo: videoView.bottomAnchor, constant: -10).isActive = true
     }
