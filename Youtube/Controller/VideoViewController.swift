@@ -11,13 +11,18 @@ import AVKit
 
 class VideoViewController: UIViewController, videoPlayDelegate{
     
-    // MARK: - variables
+    // MARK: - Properties
+    
+    // variables
     var interacting: Interactor?
     
     var hideVideoPlayView = true
     
     private var player: AVPlayer?
     
+    private var observerToken: Any?
+    
+    // UI variables
     let baseView: UIView = {
        let view = UIView()
         view.backgroundColor = .white
@@ -36,6 +41,7 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         let image = UIImage(named: "thumb")?.withRenderingMode(.alwaysOriginal)
         slider.setThumbImage(image, for: .normal)
         slider.addTarget(self, action: #selector(handleSlide), for: .valueChanged)
+        slider.addTarget(self, action: #selector(handleSlideTap), for: .touchUpInside)
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -58,7 +64,9 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         setupPlayer()
     }
     
-    // MARK: - set up views
+    // MARK: - set up methods
+    
+    // set up views
     fileprivate func setupViews(){
         // set delegate
         playView.playVideoDelegate = self
@@ -96,8 +104,7 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         playView.heightAnchor.constraint(equalTo: videoView.heightAnchor).isActive = true
     }
     
-    // TODO: - video player
-    // MARK: - set up video player https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+    // set up video player https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
     fileprivate func setupPlayer(){
         let url = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
         player = AVPlayer(url: url!)
@@ -112,15 +119,17 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         player?.pause()
     }
     
-    // MARK: - video player observer
+    // set up video player observer
     private let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     fileprivate func setupVideoPlayerObserver(){
         let totalTime = player?.currentItem?.asset.duration.seconds
         let mini = Int(totalTime!) / 60
         let secs = Int(totalTime!) % 60
+        var preTime: Float64 = 0
         self.playView.timingEndLabel.text = "\(mini):0\(secs)"
-        player?.addPeriodicTimeObserver(forInterval: interval, queue: nil, using: { (time) in
+        observerToken =
+            player?.addPeriodicTimeObserver(forInterval: interval, queue: nil, using: { (time) in
             var currentTime: Float64, mini: Int, sec: Int
             currentTime = floor(CMTimeGetSeconds(time))
             mini = Int(currentTime / 60)
@@ -132,10 +141,18 @@ class VideoViewController: UIViewController, videoPlayDelegate{
                 self.playView.timingStartLabel.text = time
                 self.slider.value = Float(currentTime / totalTime!)
             }
+                
+            if (currentTime - preTime) > 3 && self.player?.rate == 1 {
+                self.hideVideoPlayView = true
+                self.playView.isHidden = true
+                preTime = currentTime
+            }
         })
     }
     
-    // MARK: - pan gesuter handler
+    // MARK: - gestures handlers
+    
+    // pan gesture handler
     @objc func handlePan(_ gesture: UIPanGestureRecognizer){
         let progess = gesture.translation(in: view).y
         let downward = max((progess / view.frame.height), 0)
@@ -160,25 +177,40 @@ class VideoViewController: UIViewController, videoPlayDelegate{
                 inter.started = false
                 inter.finished ? inter.finish() : inter.cancel()
                 player?.pause()
+                if let token = observerToken {
+                    player?.removeTimeObserver(token)
+                }
             default:
                 break
             }
         }
     }
     
+    // tap gesture handler
     @objc func handleTap(){
-        print("\(hideVideoPlayView)")
         videoView.bringSubviewToFront(playView)
         hideVideoPlayView = hideVideoPlayView ? false : true
         playView.isHidden = hideVideoPlayView
+        print("\(hideVideoPlayView)")
     }
     
+    // slide gesture handler
     @objc func handleSlide(){
         print("value changed")
         let time = CMTime(value: Int64(Float64(slider.value) * (player?.currentItem?.duration.seconds)!), timescale: 1)
         player?.seek(to: time, completionHandler: { (completed) in
             // do something after completion
         })
+    }
+    
+    // slider tap gesture handler
+    @objc func handleSlideTap(){
+        print("slider tapped")
+        if hideVideoPlayView {
+            playView.isHidden = false
+            hideVideoPlayView = false
+        }
+        videoView.bringSubviewToFront(playView)
     }
     
     // MARK: - play video delegate

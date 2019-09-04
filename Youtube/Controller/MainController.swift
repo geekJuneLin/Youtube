@@ -10,7 +10,9 @@ import UIKit
 
 class MainController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    // MARK: - variables
+    // MARK: Properties
+    
+    // variables
     let cellId = "cellId"
     
     let titles = ["  Home", "  Trending", "  Subscription", "  Account"]
@@ -35,18 +37,9 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         SettingLanucher.shard.mainController = self
     }
     
-    // MARK: - fetch data
-    fileprivate func fetchData(){
-        videos = [Video]()
-        ApiService.shard.fetchData({ (videos) -> (Void) in
-            self.videos = videos
-            DispatchQueue.main.async(execute: {
-                self.collectionView.reloadData()
-            })
-        })
-    }
+    // MARK: - set up methods
     
-    // MARK: - set up navigation
+    // set up navigation
     fileprivate func setupNavigation(){
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: view.frame.height))
         titleLabel.text = "  Home"
@@ -59,7 +52,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationController?.navigationBar.barStyle = .blackTranslucent
     }
     
-    // MARK: - set up collection views
+    // set up collection view
     fileprivate func setupCollectionView(){
         collectionView.backgroundColor = .white
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: cellId)
@@ -71,7 +64,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
     }
     
-    // MARK: - set up bar items
+    // set up bar items
     fileprivate func setupBarItems(){
         let searchImage = UIImage(named: "loupe")?.withRenderingMode(.alwaysOriginal)
         let searchButton = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(searchBtnPressed))
@@ -82,50 +75,7 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItems = [menuButton, searchButton]
     }
     
-    // MARK: - Menu bar buttons pressed
-    @objc func searchBtnPressed(){
-        print("search button pressed")
-    }
-    
-    
-    @objc func menuBtnPressed(){
-       SettingLanucher.shard.showSettings()
-    }
-    
-    // MARK: - functions present another view
-    func presentViewController(setting: Setting){
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .white
-        viewController.navigationItem.title = setting.title
-        
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: - onverride the present function
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        navigationController?.present(viewControllerToPresent, animated: flag, completion: completion)
-        
-        if let des = viewControllerToPresent as? VideoViewController {
-            print("view controller")
-            des.transitioningDelegate = self
-            des.interacting = interactor
-        }
-    }
-    
-    // MARK: - displaying the video view controller
-    func presentVideoView(){
-        let videoViewController = VideoViewController()
-        
-        // Deal with the black groundcolor after dismissing view controller
-        videoViewController.modalPresentationStyle = .custom
-        self.present(videoViewController, animated: true) {
-//            self.navigationController?.navigationBar.barTintColor = .black
-        }
-    }
-    
-    
-    // MARK: - set up the menu bar below the navigation bar
+    // set up the menu bar below the navigation bar
     let menuView: MenuBar = {
         let mb = MenuBar()
         mb.backgroundColor = UIColor(red: 230/255, green: 32/255, blue: 31/255, alpha: 1)
@@ -148,7 +98,74 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         menuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         menuView.mainController = self
     }
-
+    
+    // MARK: - button action handler
+    @objc func searchBtnPressed(){
+        print("search button pressed")
+    }
+    
+    
+    @objc func menuBtnPressed(){
+       SettingLanucher.shard.showSettings()
+    }
+    
+    // MARK: - functions
+    
+    // fetch data
+    fileprivate func fetchData(){
+        videos = [Video]()
+        ApiService.shard.fetchData({ (videos) -> (Void) in
+            self.videos = videos
+            DispatchQueue.main.async(execute: {
+                self.collectionView.reloadData()
+            })
+        })
+    }
+    
+    // present view controller
+    func presentViewController(setting: Setting){
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .white
+        viewController.navigationItem.title = setting.title
+        
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    // override present function of navigation controller
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        navigationController?.present(viewControllerToPresent, animated: flag, completion: completion)
+        
+        if let des = viewControllerToPresent as? VideoViewController {
+            print("view controller")
+            des.transitioningDelegate = self
+            des.interacting = interactor
+        }
+    }
+    
+    // displaying the video view controller
+    func presentVideoView(){
+        let videoViewController = VideoViewController()
+        
+        videoViewController.modalPresentationStyle = .custom
+        self.present(videoViewController, animated: true) {
+        }
+    }
+    
+    // display the selected cell
+    func scrollToViewAtIndex(index: Int){
+        let indexPath = IndexPath(item: index, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updateNavigationTitle(index: index)
+    }
+    
+    // update the title of the navigation bar
+    fileprivate func updateNavigationTitle(index: Int){
+        if let label = navigationItem.titleView as? UILabel{
+            label.text = titles[index]
+        }
+    }
+    
     // MARK: - delegate methods
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -187,17 +204,5 @@ class MainController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UIView.animate(withDuration: 0.75, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    func scrollToViewAtIndex(index: Int){
-        let indexPath = IndexPath(item: index, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        updateNavigationTitle(index: index)
-    }
-    
-    fileprivate func updateNavigationTitle(index: Int){
-        if let label = navigationItem.titleView as? UILabel{
-            label.text = titles[index]
-        }
     }
 }

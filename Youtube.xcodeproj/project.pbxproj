@@ -115,8 +115,8 @@
 				8E4846BB230F73FB004BBC5A /* MenuBar.swift */,
 				8EAC537A2316654B00FE0210 /* SlideMenu.swift */,
 				8EAC537C2316825100FE0210 /* SettingLanucher.swift */,
-				8E6B995C231D15A7005984B2 /* VideoView.swift */,
 				8EC8F5A1231DF28800B8DF1B /* CustomSlider.swift */,
+				8E6B995C231D15A7005984B2 /* VideoView.swift */,
 				8EC8F5A3231E0E0100B8DF1B /* VideoPlayView.swift */,
 				8E60608A230E84690017787F /* Custom cell */,
 			);
