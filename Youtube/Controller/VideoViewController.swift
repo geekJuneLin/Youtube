@@ -52,6 +52,13 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         return view
     }()
     
+    let collectionView: UICollectionView = {
+       let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+        cv.backgroundColor = .yellow
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        return cv
+    }()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
@@ -62,6 +69,7 @@ class VideoViewController: UIViewController, videoPlayDelegate{
 
         setupViews()
         setupPlayer()
+        setupBottomCollectionViews()
     }
     
     // MARK: - set up methods
@@ -150,6 +158,15 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         })
     }
     
+    // set up bottom collection view
+    func setupBottomCollectionViews(){
+        view.addSubview(collectionView)
+        
+        collectionView.topAnchor.constraint(equalTo: videoView.bottomAnchor).isActive = true
+        collectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     // MARK: - gestures handlers
     
     // pan gesture handler
@@ -177,8 +194,9 @@ class VideoViewController: UIViewController, videoPlayDelegate{
                 inter.started = false
                 inter.finished ? inter.finish() : inter.cancel()
                 player?.pause()
-                if let token = observerToken {
-                    player?.removeTimeObserver(token)
+                if let token = observerToken,
+                   let play = player{
+                    play.removeTimeObserver(token)
                 }
             default:
                 break
