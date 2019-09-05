@@ -52,9 +52,8 @@ class VideoViewController: UIViewController, videoPlayDelegate{
         return view
     }()
     
-    let collectionView: UICollectionView = {
-       let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        cv.backgroundColor = .yellow
+    let collectionView: VideoBottomView = {
+       let cv = VideoBottomView()
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -162,7 +161,7 @@ class VideoViewController: UIViewController, videoPlayDelegate{
     func setupBottomCollectionViews(){
         view.addSubview(collectionView)
         
-        collectionView.topAnchor.constraint(equalTo: videoView.bottomAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: videoView.bottomAnchor, constant: 10).isActive = true
         collectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
@@ -194,10 +193,11 @@ class VideoViewController: UIViewController, videoPlayDelegate{
                 inter.started = false
                 inter.finished ? inter.finish() : inter.cancel()
                 player?.pause()
-                if let token = observerToken,
-                   let play = player{
-                    play.removeTimeObserver(token)
-                }
+                // TODO: - fix the bug
+//                if let token = observerToken,
+//                   let play = player{
+//                    play.removeTimeObserver(token)
+//                }
             default:
                 break
             }

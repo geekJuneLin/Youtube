@@ -21,7 +21,7 @@ class CustomSlider: UISlider{
         super.init(frame: frame)
         
         self.minimumTrackTintColor = .red
-        self.maximumTrackTintColor = UIColor(white: 0, alpha: 0.1)
+        self.maximumTrackTintColor = UIColor(white: 0.5, alpha: 0.1)
     }
     
     required init?(coder aDecoder: NSCoder) {
